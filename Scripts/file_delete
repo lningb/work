@@ -24,3 +24,8 @@ for dir in "$PARENT_DIR"/*/; do
         fi
     fi
 done
+
+
+
+#usage
+bash  ../file_delete   xxx/xxx/fir
