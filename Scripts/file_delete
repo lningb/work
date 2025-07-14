@@ -28,4 +28,4 @@ done
 
 
 #usage
-bash  ../file_delete   xxx/xxx/fir
+bash  ../file_delete   xxx/xxx/dir
