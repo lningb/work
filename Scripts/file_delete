@@ -1,0 +1,26 @@
+#!/bin/bash
+
+PARENT_DIR="$1"
+
+current_time=$(date +%s)
+
+for dir in "$PARENT_DIR"/*/; do
+    DIRECTORY=${dir%*/}
+
+    if [ -d "$DIRECTORY" ]; then
+        mod_time=$(find "$DIRECTORY" -type f -exec stat --format '%Y' {} + 2>/dev/null | sort | head -n1)
+        mod_time=${mod_time:-$(stat -c %Y "$DIRECTORY")}
+
+        time_diff=$((current_time - mod_time))
+
+        days_diff=$((time_diff / (3600 * 24)))
+
+        if [ $days_diff -ge 30 ]; then
+            echo "Delete Files: $DIRECTORY is not modified in last 30 days..."
+            rm -rf "$DIRECTORY"
+            echo "$DIRECTORY is deleted."
+        else
+            echo "$DIRECTORY is modified in last 30 days."
+        fi
+    fi
+done
